@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Figlancer Bot – Beta</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f9f9f9;
+      color: #222;
+    }
+
+    header {
+      background: #24292e;
+      color: white;
+      padding: 2rem 1rem;
+      text-align: center;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 2.5rem;
+    }
+
+    header p {
+      margin-top: 0.5rem;
+      font-size: 1.2rem;
+      color: #ccc;
+    }
+
+    section {
+      padding: 2rem 1rem;
+      max-width: 800px;
+      margin: auto;
+    }
+
+    .beta-badge {
+      display: inline-block;
+      background: #ff9800;
+      color: white;
+      padding: 0.2rem 0.6rem;
+      border-radius: 4px;
+      font-size: 0.9rem;
+      margin-left: 0.5rem;
+    }
+
+    .roadmap {
+      background: #eeeeee;
+      border-left: 5px solid #2196f3;
+      padding: 1rem;
+      margin-top: 1rem;
+    }
+
+    .chatbox {
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+      padding: 1rem;
+      margin-top: 2rem;
+    }
+
+    .chat-display {
+      min-height: 200px;
+      max-height: 300px;
+      overflow-y: auto;
+      padding: 0.5rem;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      background: #fefefe;
+      margin-bottom: 1rem;
+    }
+
+    .chat-input {
+      display: flex;
+    }
+
+    .chat-input input {
+      flex: 1;
+      padding: 0.6rem;
+      border: 1px solid #ccc;
+      border-radius: 6px 0 0 6px;
+    }
+
+    .chat-input button {
+      padding: 0.6rem 1rem;
+      border: none;
+      background: #2196f3;
+      color: white;
+      border-radius: 0 6px 6px 0;
+      cursor: pointer;
+    }
+
+    footer {
+      text-align: center;
+      font-size: 0.9rem;
+      color: #666;
+      padding: 2rem 0;
+    }
+
+    @media screen and (max-width: 600px) {
+      header h1 {
+        font-size: 2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>Figlancer Bot <span class="beta-badge">Beta</span></h1>
+  <p>Your freelance assistant powered by AI</p>
+</header>
+
+<section>
+  <h2>What is Figlancer Bot?</h2>
+  <p>This is a smart freelance assistant that helps you find jobs based on your skills. Just enter a prompt like “React jobs” and it will fetch results for you — all powered by AI (coming soon!).</p>
+
+  <div class="roadmap">
+    <strong>🚀 Final Features Coming Soon:</strong>
+    <ul>
+      <li>AI-powered job search</li>
+      <li>Telegram bot integration</li>
+      <li>Freelance platform scraping (Upwork, Fiverr, etc.)</li>
+      <li>Daily job updates to your inbox</li>
+    </ul>
+  </div>
+
+  <h3>Try the Beta Chat</h3>
+  <div class="chatbox">
+    <div class="chat-display" id="chatDisplay">
+      <p><strong>Bot:</strong> Hello! Ask me about freelance jobs (test mode).</p>
+    </div>
+    <div class="chat-input">
+      <input type="text" id="userInput" placeholder="Type a message..." />
+      <button onclick="sendMessage()">Send</button>
+    </div>
+  </div>
+</section>
+
+<footer>
+  © 2025 Figlancer – Built with 💙 | Beta testing in progress.
+</footer>
+
+<script>
+  function sendMessage() {
+    const input = document.getElementById("userInput");
+    const chat = document.getElementById("chatDisplay");
+    const message = input.value.trim();
+    if (!message) return;
+
+    // Add user message
+    chat.innerHTML += `<p><strong>You:</strong> ${message}</p>`;
+    input.value = "";
+
+    // Simulate bot reply (later replace with fetch to backend)
+    setTimeout(() => {
+      chat.innerHTML += `<p><strong>Bot:</strong> I received: "${message}". I'm still learning in beta mode!</p>`;
+      chat.scrollTop = chat.scrollHeight;
+    }, 800);
+  }
+</script>
+
+</body>
+</html>
