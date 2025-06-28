@@ -144,21 +144,42 @@
 </footer>
 
 <script>
-  function sendMessage() {
+  async function sendMessage() {
     const input = document.getElementById("userInput");
     const chat = document.getElementById("chatDisplay");
     const message = input.value.trim();
     if (!message) return;
 
-    // Add user message
     chat.innerHTML += `<p><strong>You:</strong> ${message}</p>`;
     input.value = "";
 
-    // Simulate bot reply (later replace with fetch to backend)
-    setTimeout(() => {
-      chat.innerHTML += `<p><strong>Bot:</strong> I received: "${message}". I'm still learning in beta mode!</p>`;
+    try {
+      const response = await fetch("https://32ca-37-111-173-244.ngrok-free.app/search", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ query: message })
+      });
+
+      const data = await response.json();
+
+      if (data.length === 0) {
+        chat.innerHTML += `<p><strong>Bot:</strong> ❌ No jobs found.</p>`;
+      } else {
+        const formatted = data.map((job, i) =>
+          `${i + 1}. ${job.title} (${job.location})<br>` +
+          `&nbsp;&nbsp;&nbsp;Company: ${job.company}<br>` +
+          `&nbsp;&nbsp;&nbsp;Description: ${job.description}<br>` +
+          `&nbsp;&nbsp;&nbsp;<a href="${job.apply_link}" target="_blank">Apply here</a><br><br>`
+        ).join("");
+        chat.innerHTML += `<p><strong>Bot:</strong><br>${formatted}</p>`;
+      }
+
       chat.scrollTop = chat.scrollHeight;
-    }, 800);
+    } catch (err) {
+      chat.innerHTML += `<p><strong>Bot:</strong> ❌ Error connecting to backend.</p>`;
+    }
   }
 </script>
 

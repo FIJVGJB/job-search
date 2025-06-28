@@ -1,53 +1,24 @@
+from flask import Flask, request, jsonify
 import requests
 
+app = Flask(__name__)
+
 def search_jobs(query):
-    url = "https://jsearch.p.rapidapi.com/search"
+    # (Your same existing job scraping logic here)
+    ...
 
-    headers = {
-        "X-RapidAPI-Key": "80be7f8251msh1363265404d3c26p16700bjsn414dbdb600f5",
-        "X-RapidAPI-Host": "jsearch.p.rapidapi.com"
-    }
+@app.route("/")
+def home():
+    return "✅ Job Bot API is running."
 
-    params = {
-        "query": query,
-        "page": "1",
-        "num_pages": "1"
-    }
+@app.route("/search")
+def search():
+    query = request.args.get("query")
+    if not query:
+        return jsonify({"error": "No query provided."}), 400
 
-    print("🔍 Searching jobs...")
-    response = requests.get(url, headers=headers, params=params)
+    jobs = search_jobs(query)
+    return jsonify(jobs)
 
-    if response.status_code != 200:
-        print(f"❌ API Error: {response.status_code}")
-        return []
-
-    data = response.json()
-    jobs = data.get("data", [])
-
-    job_list = []
-    for job in jobs[:5]:  # Limit to 5 jobs
-        job_info = {
-            "title": job.get("job_title", "N/A"),
-            "company": job.get("employer_name", "N/A"),
-            "location": job.get("job_city", "N/A"),
-            "description": job.get("job_description", "N/A")[:200] + "...",
-            "apply_link": job.get("job_apply_link", "N/A")
-        }
-        job_list.append(job_info)
-
-    return job_list
-
-
-# --- MAIN ---
-query = input("🔎 Enter job title to search: ")
-jobs = search_jobs(query)
-
-if jobs:
-    print(f"\n📋 Found {len(jobs)} jobs:\n")
-    for i, job in enumerate(jobs, 1):
-        print(f"{i}. {job['title']} ({job['location']})")
-        print(f"   Company: {job['company']}")
-        print(f"   Description: {job['description']}")
-        print(f"   Apply: {job['apply_link']}\n")
-else:
-    print("❌ No jobs found.")
+if __name__ == "__main__":
+    app.run(debug=True)
