@@ -154,13 +154,14 @@
     input.value = "";
 
     try {
-      const response = await fetch("https://32ca-37-111-173-244.ngrok-free.app/search", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({ query: message })
-      });
+     const response = await fetch("https://33fe-37-111-173-244.ngrok-free.app/search", {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json"
+  },
+  body: JSON.stringify({ query: message })
+});
+
 
       const data = await response.json();
 
